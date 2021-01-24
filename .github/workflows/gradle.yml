@@ -20,7 +20,52 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Find correct JAR
+      id: findjar
+      run: |
+        output="$(find build/libs/ ! -name "*-dev.jar" ! -name "*-sources.jar" -type f -printf "%f\n")"
+        echo "::set-output name=jarname::$output"
+    - name: Save build artifacts in the action
+      uses: actions/upload-artifact@v2
+      with:
+        name: Artifacts for ${{ matrix.branch }}
+        path: build/libs
+    - name: Upload to the Github release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/libs/${{ steps.findjar.outputs.jarname }}
+        asset_name: ${{ steps.findjar.outputs.jarname }}
+        asset_content_type: application/java-archive
+#    - name: Upload to Curseforge
+#      uses: itsmeow/curseforge-upload@v3
+#      with:
+#        token: ${{ secrets.CF_API_TOKEN }}
+#        project_id: 349239
+#        game_endpoint: minecraft
+#        file_path: build/libs/${{ steps.findjar.outputs.jarname }}
+#        changelog_type: markdown
+#        changelog: ${{ github.event.release.body }}
+#        display_name: Carpet Mod v${{ needs.Get-Properties.outputs.carpet-version }} for ${{ steps.getbranchinfo.outputs.version }}
+#        game_versions: 7499,4458,${{ steps.getbranchinfo.outputs.curse-versions }} #Fabric,Java 8,[version (s) for the branch]
+#        release_type: ${{ needs.Get-Properties.outputs.release-type }}
+#    - name: Ask Gradle to publish
+#      run: ./gradlew publish
+#    - name: Save publish folder in action's artifacts # Remove when automated
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: Maven publishing artifacts for ${{ matrix.branch }}
+#        path: publish/carpet/fabric-carpet/
