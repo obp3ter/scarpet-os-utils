@@ -14,11 +14,10 @@ public class OsExecutor {
         expr.addLazyFunction("os_exec", 1, (c, t, lv) -> {
 
             String command = lv.get(0).evalValue(c).getString();
-            ProcessBuilder processBuilder = execProcess(command);
 
             try {
 
-                Process process = processBuilder.start();
+                Process process = Runtime.getRuntime().exec(command);
 
                 StringBuilder output = new StringBuilder();
 
@@ -40,16 +39,6 @@ public class OsExecutor {
                 throw new InternalExpressionException(e.getMessage());
             }
         });
-    }
-
-    private static ProcessBuilder execProcess(String command) {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        String os = System.getProperty("os.name");
-        if (os.equals("Windows 10")) { processBuilder.command("powershell.exe", "-c", command); }
-        else if (os.matches("Windows .*")) { processBuilder.command("cmd.exe", "/c", command); }
-        else if (os.matches("Ubuntu .*")) { processBuilder.command("bash", "-c", command); }
-        else { processBuilder.command("sh", "-c", command); }
-        return processBuilder;
     }
 
 }
