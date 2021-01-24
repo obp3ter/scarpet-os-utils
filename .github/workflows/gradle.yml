@@ -5,9 +5,8 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -49,7 +48,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: New version!
+        body: New version! ${{ github.ref }} is here!
         draft: false
         prerelease: false
     - name: Upload to the Github release
@@ -61,22 +60,3 @@ jobs:
         asset_path: build/libs/${{ steps.findjar.outputs.jarname }}
         asset_name: ${{ steps.findjar.outputs.jarname }}
         asset_content_type: application/java-archive
-#    - name: Upload to Curseforge
-#      uses: itsmeow/curseforge-upload@v3
-#      with:
-#        token: ${{ secrets.CF_API_TOKEN }}
-#        project_id: 349239
-#        game_endpoint: minecraft
-#        file_path: build/libs/${{ steps.findjar.outputs.jarname }}
-#        changelog_type: markdown
-#        changelog: ${{ github.event.release.body }}
-#        display_name: Carpet Mod v${{ needs.Get-Properties.outputs.carpet-version }} for ${{ steps.getbranchinfo.outputs.version }}
-#        game_versions: 7499,4458,${{ steps.getbranchinfo.outputs.curse-versions }} #Fabric,Java 8,[version (s) for the branch]
-#        release_type: ${{ needs.Get-Properties.outputs.release-type }}
-#    - name: Ask Gradle to publish
-#      run: ./gradlew publish
-#    - name: Save publish folder in action's artifacts # Remove when automated
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: Maven publishing artifacts for ${{ matrix.branch }}
-#        path: publish/carpet/fabric-carpet/
