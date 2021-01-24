@@ -13,6 +13,7 @@
     "sources": "https://github.com/obp3ter/scarpet-os-utils"
   },
 
+  "icon": "assets/scarpet-os-utils/icon.png",
 
   "environment": "*",
   "entrypoints": {
