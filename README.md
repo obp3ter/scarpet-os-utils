@@ -1,4 +1,5 @@
-# Scarpet Os Utils
+# Scarpet Os Utils 
+![Icon](/src/main/resources/assets/scarpet-os-utils/icon.png) Icon made by [hudumannaia](https://github.com/Hudumannaia)
 
 This mod was made to make you be able to execute system functions and programs outside you minecraft server. Have fun with it!
 
