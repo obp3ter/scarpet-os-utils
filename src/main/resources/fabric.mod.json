@@ -27,9 +27,6 @@
     "fabricloader": ">=0.4.0",
     "carpet": "*"
   },
-  "suggests": {
-    "flamingo": "*"
-  },
   "custom": {
     "modmenu:parent": "carpet"
   }
