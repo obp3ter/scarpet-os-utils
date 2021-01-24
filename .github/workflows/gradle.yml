@@ -48,7 +48,7 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body: New version!
+        body: New version! ${{ github.ref }} is here!
         draft: false
         prerelease: false
     - name: Upload to the Github release
