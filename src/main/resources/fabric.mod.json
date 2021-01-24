@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "scarpet-os-utils",
+  "version": "${version}",
+
+  "name": "Scarpet Os Utils",
+  "description": "Adds os execution support to scarpet",
+  "authors": [
+    "obp3ter"
+  ],
+  "contact": {
+    "homepage": "https://github.com/obp3ter",
+    "sources": "https://github.com/obp3ter/scarpet-os-utils"
+  },
+
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "scarpetOsUtils.ScarpetOsUtils"
+    ]
+  },
+
+  "depends": {
+    "minecraft": "1.16.x",
+    "fabricloader": ">=0.4.0",
+    "carpet": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "custom": {
+    "modmenu:parent": "carpet"
+  }
+}
