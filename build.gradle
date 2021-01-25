@@ -59,6 +59,7 @@ task publishModrinth (type: TaskModrinthUpload){
     if(project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
+        versionName = "Scarpet Os Utils "+project.getProperty("publishModrinthVersion")
         versionNumber = project.getProperty("publishModrinthVersion")
         uploadFile = jar
         addGameVersion("${project.minecraft_version}")
