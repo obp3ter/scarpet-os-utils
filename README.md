@@ -1,7 +1,7 @@
 # Scarpet Os Utils 
 ![Icon](/src/main/resources/assets/scarpet-os-utils/icon.png) Icon made by [hudumannaia](https://github.com/Hudumannaia)
 
-This mod was made to make you be able to execute system functions and programs outside you minecraft server using scrapet from [Fabric carpet](https://github.com/gnembon/fabric-carpet). Have fun with it!
+This mod was made to make you be able to execute system functions and programs outside you minecraft server using [scrapet](https://github.com/gnembon/scarpet) from [Fabric carpet](https://github.com/gnembon/fabric-carpet). Have fun with it!
 
 ## Available functions:
 ### os_exec(command) 
