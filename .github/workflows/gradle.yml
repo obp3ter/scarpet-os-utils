@@ -35,6 +35,12 @@ jobs:
       run: |
         output="$(find build/libs/ ! -name "*-dev.jar" ! -name "*-sources.jar" -type f -printf "%f\n")"
         echo "::set-output name=jarname::$output"
+    - name: Split jar name
+      uses: jungwinter/split@v1
+      id: split
+      with:
+        msg: ${{ steps.findjar.outputs.jarname }}
+        separator: '-'
     - name: Save build artifacts in the action
       uses: actions/upload-artifact@v2
       with:
@@ -49,3 +55,15 @@ jobs:
         asset_path: build/libs/${{ steps.findjar.outputs.jarname }}
         asset_name: ${{ steps.findjar.outputs.jarname }}
         asset_content_type: application/java-archive
+    - name: Upload to Curseforge
+      uses: itsmeow/curseforge-upload@v3
+      with:
+        token: ${{ secrets.CURSEFORGE_API_TOKEN }}
+        project_id: 439706
+        game_endpoint: minecraft
+        file_path: build/libs/${{ steps.findjar.outputs.jarname }}
+        changelog_type: markdown
+        changelog: ${{ github.event.release.body }}
+        display_name: Scarpet Os Utils ${{ github.event.release.tag_name }}
+        game_versions: 7499, "Java 8", ${{ steps.split.outputs._3 }}
+        release_type: release
