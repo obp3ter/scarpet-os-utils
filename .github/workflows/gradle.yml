@@ -41,6 +41,12 @@ jobs:
       with:
         msg: ${{ steps.findjar.outputs.jarname }}
         separator: '-'
+    - name: Split version
+      uses: jungwinter/split@v1
+      id: splitVersion
+      with:
+        msg: ${{ steps.split.outputs._3 }}
+        separator: '.'
     - name: Save build artifacts in the action
       uses: actions/upload-artifact@v2
       with:
@@ -65,5 +71,5 @@ jobs:
         changelog_type: markdown
         changelog: ${{ github.event.release.body }}
         display_name: Scarpet Os Utils ${{ github.event.release.tag_name }}
-        game_versions: 7499, "Java 8", ${{ steps.split.outputs._3 }}
+        game_versions: 7499, 4458, ${{ join(steps.splitVersion.outputs,'-') }}
         release_type: release
