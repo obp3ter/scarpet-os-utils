@@ -61,6 +61,7 @@ task publishModrinth (type: TaskModrinthUpload){
         projectId = 'uLI4BJM0'
         versionName = "Scarpet Os Utils "+project.getProperty("publishModrinthVersion")
         versionNumber = project.getProperty("publishModrinthVersion")
+        changelog = project.getProperty("publishModrinthChangelog")
         uploadFile = jar
         addGameVersion("${project.minecraft_version}")
         addLoader('fabric')
