@@ -28,7 +28,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle and publish to Modrinth
-      run: ./gradlew build publishModrinth -PpublishModrinthVersion=${{ github.event.release.tag_name }} -PpublishModrinthSecret=${{ secrets.MODRINTH_API_TOKEN }} -PpublishModrinthChangelog="${{ github.event.release.body }}"
+      run: ./gradlew build publishModrinth -PpublishModrinthVersion=${{ github.event.release.tag_name }} -PpublishModrinthSecret=${{ secrets.MODRINTH_API_TOKEN }} -PpublishModrinthChangelog="\""${{ github.event.release.body }}"\""
 
     - name: Find correct JAR
       id: findjar
