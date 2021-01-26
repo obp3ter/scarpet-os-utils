@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import carpet.script.Expression;
 import carpet.script.LazyValue;
 import carpet.script.exception.InternalExpressionException;
+import carpet.script.value.NumericValue;
 import carpet.script.value.StringValue;
-import carpet.script.value.Value;
 
 public class OsExecutor {
     public static void apply(Expression expr) {
@@ -70,7 +70,7 @@ public class OsExecutor {
             if (exitVal == 0) {
                 return (cc, tt) -> StringValue.of(output.toString());
             } else {
-                return (cc, tt) -> Value.NULL;
+                return (cc, tt) -> NumericValue.of(exitVal);
             }
         } catch (IOException | InterruptedException e) {
             throw new InternalExpressionException(e.getMessage());
