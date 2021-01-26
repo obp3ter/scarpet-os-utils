@@ -15,7 +15,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.minecraft_version+'-'+project.mod_version
+version = project.minecraft_version + '-' + project.carpet_mod_version + '-' + project.mod_version
 group = project.maven_group
 
 minecraft {
@@ -28,7 +28,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
     modCompile "carpet:fabric-carpet:${project.carpet_minecraft_version}-${project.carpet_core_version}"
-
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 
@@ -55,11 +54,11 @@ tasks.withType(JavaCompile) {
 }
 import com.modrinth.minotaur.TaskModrinthUpload
 
-task publishModrinth (type: TaskModrinthUpload){
-    if(project.hasProperty("publishModrinthVersion")) {
+task publishModrinth(type: TaskModrinthUpload) {
+    if (project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
-        versionName = "Scarpet Os Utils "+project.getProperty("publishModrinthVersion")
+        versionName = "Scarpet Os Utils " + project.getProperty("publishModrinthVersion")
         versionNumber = project.getProperty("publishModrinthVersion")
         changelog = project.getProperty("publishModrinthChangelog")
         uploadFile = jar
@@ -86,6 +85,6 @@ publishing {
     }
 
     repositories {
-         mavenLocal()
+        mavenLocal()
     }
 }
