@@ -71,5 +71,5 @@ jobs:
         changelog_type: markdown
         changelog: ${{ github.event.release.body }}
         display_name: Scarpet Os Utils ${{ github.event.release.tag_name }}
-        game_versions: 7499, 4458, ${{ join(steps.splitVersion.outputs,'-') }}
+        game_versions: 7499, 4458, "${{ join(steps.splitVersion.outputs,'-') }}"
         release_type: release
