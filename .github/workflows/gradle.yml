@@ -73,4 +73,5 @@ jobs:
         changelog: ${{ github.event.release.body }}
         display_name: Scarpet Os Utils ${{ github.event.release.tag_name }}
         game_versions: 7499, 4458, "${{ join(steps.splitVersion.outputs,'-') }}"
+        relations: carpet:requiredDependency
         release_type: release
