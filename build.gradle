@@ -50,7 +50,7 @@ tasks.withType(JavaCompile) {
 }
 import com.modrinth.minotaur.dependencies.ModDependency
 
-modrinth(type: TaskModrinthUpload) {
+modrinth {
     if (project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
