@@ -48,9 +48,9 @@ tasks.withType(JavaCompile) {
 
     it.options.release = 17
 }
-import com.modrinth.minotaur.TaskModrinthUpload
+import com.modrinth.minotaur.dependencies.ModDependency
 
-task modrinth(type: TaskModrinthUpload) {
+modrinth(type: TaskModrinthUpload) {
     if (project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
