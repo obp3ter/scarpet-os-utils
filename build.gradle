@@ -50,7 +50,7 @@ tasks.withType(JavaCompile) {
 }
 import com.modrinth.minotaur.TaskModrinthUpload
 
-task publishModrinth(type: TaskModrinthUpload) {
+modrinth(type: TaskModrinthUpload) {
     if (project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
@@ -58,8 +58,8 @@ task publishModrinth(type: TaskModrinthUpload) {
         versionNumber = project.getProperty("publishModrinthVersion")
         changelog = project.getProperty("publishModrinthChangelog")
         uploadFile = jar
-        addGameVersion("${project.minecraft_version}")
-        addLoader('fabric')
+        gameVersions = ["${project.minecraft_version}"]
+        loaders = ['fabric']
     }
 }
 
