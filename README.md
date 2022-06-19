@@ -15,6 +15,8 @@ Have fun with it! For ideas you can check-out [my scarpet scripts](https://githu
 ## Available functions:
 ### os_exec(command) 
 Executes the command in the os.
+### os_exec_ignore_errors(command)
+Executes the command in the os ignoring errors.
 ### get_os()
 Returns the host os as a string.
 ### powershell_exec(command) 
