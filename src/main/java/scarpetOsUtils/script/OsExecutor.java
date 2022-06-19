@@ -16,42 +16,49 @@ public class OsExecutor {
 
             String command = lv.get(0).evalValue(c).getString();
 
-            return os_exec(command);
+            return os_exec(command, false);
+        });
+
+        expr.addLazyFunction("os_exec_ignore_errors", 1, (c, t, lv) -> {
+
+            String command = lv.get(0).evalValue(c).getString();
+
+            return os_exec(command, true);
         });
 
         expr.addLazyFunction("powershell_exec", 1, (c, t, lv) -> {
 
             String command = lv.get(0).evalValue(c).getString();
 
-            return os_exec("powershell -c "+command);
+            return os_exec("powershell -c "+command, false);
         });
 
         expr.addLazyFunction("cmd_exec", 1, (c, t, lv) -> {
 
             String command = lv.get(0).evalValue(c).getString();
 
-            return os_exec("cmd /c "+command);
+            return os_exec("cmd /c "+command, false);
         });
 
         expr.addLazyFunction("bash_exec", 1, (c, t, lv) -> {
 
             String command = lv.get(0).evalValue(c).getString();
 
-            return os_exec("bash -c "+command);
+            return os_exec("bash -c "+command, false);
         });
 
         expr.addLazyFunction("sh_exec", 1, (c, t, lv) -> {
 
             String command = lv.get(0).evalValue(c).getString();
 
-            return os_exec("sh -c "+command);
+            return os_exec("sh -c "+command, false);
         });
 
 
 
     }
 
-    private static LazyValue os_exec(String command) {
+    private static LazyValue os_exec(String command, boolean ignoreError) {
         try {
 
             Process process = Runtime.getRuntime().exec(command);
@@ -67,6 +74,9 @@ public class OsExecutor {
             }
 
             int exitVal = process.waitFor();
+            if(ignoreError){
+                return (cc, tt) -> StringValue.of(output.toString());
+            }
             if (exitVal == 0) {
                 return (cc, tt) -> StringValue.of(output.toString());
             } else {

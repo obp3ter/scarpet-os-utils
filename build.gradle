@@ -1,7 +1,7 @@
 plugins {
-    id 'fabric-loom' version '0.4-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'maven-publish'
-    id "com.modrinth.minotaur" version "1.1.0"
+    id "com.modrinth.minotaur" version "2.3.1"
 }
 
 repositories {
@@ -11,55 +11,50 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-version = project.minecraft_version+'-'+project.mod_version
+version = project.minecraft_version + '-' + project.carpet_mod_version + '-' + project.mod_version
 group = project.maven_group
 
-minecraft {
+loom {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
-    modCompile "carpet:fabric-carpet:${project.carpet_minecraft_version}-${project.carpet_core_version}"
-
-    compileOnly 'org.projectlombok:lombok:1.18.16'
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.16'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "carpet:fabric-carpet:${project.minecraft_version}-${project.carpet_core_version}"
+    compileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+    testCompileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    testAnnotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
 
 }
 
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
-        expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
+        expand "version": project.mod_version
     }
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+
+    it.options.release = 17
 }
 import com.modrinth.minotaur.TaskModrinthUpload
 
-task publishModrinth (type: TaskModrinthUpload){
-    if(project.hasProperty("publishModrinthVersion")) {
+task publishModrinth(type: TaskModrinthUpload) {
+    if (project.hasProperty("publishModrinthVersion")) {
         token = project.getProperty("publishModrinthSecret")
         projectId = 'uLI4BJM0'
-        versionName = "Scarpet Os Utils "+project.getProperty("publishModrinthVersion")
+        versionName = "Scarpet Os Utils " + project.getProperty("publishModrinthVersion")
         versionNumber = project.getProperty("publishModrinthVersion")
         changelog = project.getProperty("publishModrinthChangelog")
         uploadFile = jar
@@ -86,6 +81,6 @@ publishing {
     }
 
     repositories {
-         mavenLocal()
+        mavenLocal()
     }
 }
